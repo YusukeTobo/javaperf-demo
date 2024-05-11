@@ -2,12 +2,15 @@ package com.example.demo;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.util.concurrent.Executors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.helper.Sleep;
 
 @SpringBootApplication
 @RestController
@@ -50,5 +53,19 @@ public class DemoApplication {
 			ex.printStackTrace();
 		}
 		return status;
+	}
+
+	@RequestMapping("blocking")
+	public String blcoking() {
+		var executors = Executors.newFixedThreadPool(10);
+		var sleep = new Sleep();
+
+		for (int i=0; i<10; ++i) {
+			executors.submit(sleep::doSleep);
+		}
+
+		executors.close();
+
+		return "Blocked.";
 	}
 }
