@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.helper.Sleep;
+import com.example.demo.helper.Divide;
 
 @SpringBootApplication
 @RestController
@@ -67,5 +68,10 @@ public class DemoApplication {
 		executors.close();
 
 		return "Blocked.";
+	}
+
+	@RequestMapping("crash")
+	public void crash() {
+		new Divide().doDivide(10);
 	}
 }
