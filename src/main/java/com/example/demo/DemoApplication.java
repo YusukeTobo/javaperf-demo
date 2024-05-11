@@ -26,4 +26,12 @@ public class DemoApplication {
 	public int userModeLoad() {
 		return BCrypt.hashpw("foobar", BCrypt.gensalt(STRENGTH)).length();
 	}
+
+	private static final long SLEEP_SEC = 30;
+
+	@RequestMapping("sleep")
+	public String doSleep() throws InterruptedException {
+		Thread.sleep(SLEEP_SEC * 1000);
+		return "done.";
+	}
 }
