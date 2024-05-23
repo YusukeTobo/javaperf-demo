@@ -13,3 +13,19 @@ $ ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-XX:StartFlightRecordin
 ```
 curl localhost:8080/userLoad
 ```
+
+### Slow dependency
+```
+curl localhost:8080/testHttp
+```
+
+### Compete locking
+```
+curl localhost:8080/blocking
+```
+
+### JVM Crash
+See also `https://github.com/YusukeTobo/javaperf-demo/blob/main/src/main/cpp/README.md`
+```
+curl localhost:8080/crash
+```
