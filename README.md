@@ -5,7 +5,7 @@ You may need `ulimit -c unlimited` before launching the java program.
 
 ## How to run this demo application
 ```
-$ ./mvnw spring-boot:run
+$ ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-XX:StartFlightRecording=dumponexit=true"
 ```
 
 ## Endpoints
