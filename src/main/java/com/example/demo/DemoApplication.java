@@ -58,10 +58,10 @@ public class DemoApplication {
 
 	@RequestMapping("blocking")
 	public String blcoking() {
-		var executors = Executors.newFixedThreadPool(10);
+		var executors = Executors.newFixedThreadPool(3);
 		var sleep = new Sleep();
 
-		for (int i=0; i<10; ++i) {
+		for (int i=0; i<3; ++i) {
 			executors.submit(sleep::doSleep);
 		}
 
