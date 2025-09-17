@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.helper.Sleep;
@@ -17,9 +18,18 @@ import com.example.demo.helper.Divide;
 @RestController
 @RequestMapping("/")
 public class DemoApplication {
+	private int bcryptStrength = 17;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	public DemoApplication() {
+		try {
+			this.bcryptStrength = Integer.parseInt(System.getenv("BCRYPT_STRENGTH"));
+		} catch (NumberFormatException ex) {
+			// do nothing.
+		}
 	}
 
 	@RequestMapping("")
@@ -27,18 +37,20 @@ public class DemoApplication {
 		return "running.";
 	}
 
-	private static final int STRENGTH = 17;
-
 	@RequestMapping("userLoad")
 	public int userModeLoad() {
-		return BCrypt.hashpw("foobar", BCrypt.gensalt(STRENGTH)).length();
+		return BCrypt.hashpw("foobar", BCrypt.gensalt(this.bcryptStrength)).length();
 	}
 
-	private static final long SLEEP_SEC = 5;
-
 	@RequestMapping("sleep")
-	public String doSleep() throws InterruptedException {
-		Thread.sleep(SLEEP_SEC * 1000);
+	public String doSleep(@RequestParam String seconds) throws InterruptedException {
+		long sleepSec = 5;
+		try {
+			sleepSec = Long.parseLong(seconds);
+		} catch (NumberFormatException ex) {
+			// do nothing.
+		}
+		Thread.sleep(sleepSec * 1000);
 		return "done.";
 	}
 
