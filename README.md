@@ -14,6 +14,11 @@ $ ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-XX:StartFlightRecordin
 curl localhost:8080/userLoad
 ```
 
+### Slow endpoint
+```
+curl localhost:8080/sleep?seconds=100
+```
+
 ### Slow dependency
 ```
 curl localhost:8080/testHttp
